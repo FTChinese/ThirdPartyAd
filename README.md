@@ -9,7 +9,7 @@ In China, this creates a huge problem for publisher, because DoubleClick can onl
 When we called DoubleClick China they wouldn't admit this. But we have very solid proof. 
 
 ## Measuring DoubleClick's Success Rate
-We use another Google technology to measure DoubleClick's success rate. Here are the steps: 
+We use Google Analytics to measure DoubleClick's success rate. Here are the steps: 
 
 ### Load Start
 Before the DoubleClick code, we send a request to Google Analytics. This gets 26,508 in one day. 
