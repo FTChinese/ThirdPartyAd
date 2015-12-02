@@ -1,0 +1,244 @@
+
+    <!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="msie msie6"><![endif]-->
+<!--[if IE 7 ]><html class="msie msie7"><![endif]-->
+<!--[if IE 8 ]><html class="msie msie8"><![endif]-->
+<!--[if IE 9 ]><html class="msie msie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html xmlns="http://www.w3.org/1999/xhtml"><!--<![endif]-->
+<head>
+<meta http-equiv="Content-Language" content="zh-CN"/>    
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="canonical" href="/story/001064622?full=y" /><title>FT中文网</title>
+<script src="http://static.ftchinese.com/js/jquery-1.10.2.min.js?0"></script>
+<script src="http://static.ftchinese.com/js/startnew.js?14460149571960021212001" type="text/javascript"></script>
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','http://www.ftchinese.com/index.php/jsapi/analytics','ga');
+ga('create', 'UA-1608715-1');
+ga('require', 'displayfeatures');
+try {
+trackerNew();
+trackAdClick();
+}catch(err){
+ga('send', 'pageview');
+}
+</script>
+<!-- End Google Analytics -->
+
+<script>    
+    if(typeof startTime === "undefined"){
+      var startTime=new Date().getTime();
+    }
+    var showTime = new Date().getTime();
+    var timeSpent = showTime - startTime;
+    var homeFlag = false;
+    if("home"==="home"&&("NP_Homepage"==="NP_Homepage"||"1000"==="1000")){      homeFlag = true;
+      ga('send', 'timing', 'Home', 'Render Time', timeSpent, 'Cover, News, Comments and Videos');
+    }else{
+      if (window.location.href.indexOf("story")>=0 ){
+        ga('send', 'timing', 'Story', 'Render Time', timeSpent, 'Full Body');
+      }else if(window.location.href.indexOf("video")>=0 ){
+
+      }else if(window.location.href.indexOf("channel")>=0){
+        ga('send', 'timing', 'Channel', 'Render Time', timeSpent, 'Channel Content');
+      }else if(window.location.href.indexOf("interactive")>=0){
+
+      }else{
+        
+      }
+    }
+</script>
+
+
+
+<script>
+function trackAd(adAction, adLabel, reachabilityStatus) {
+  var adLoadTime;
+  var adTimeSpent;
+  if (typeof window.ga === 'function') {
+    adLoadTime = new Date().getTime();
+    adTimeSpent = adLoadTime - window.adStartTime;
+    ga('send','event','Third Party Ad', adAction + ' - all', adLabel, {'nonInteraction':1});
+    ga('send', 'timing', 'Third Party Ad', adAction, adTimeSpent, adLabel);
+    // console.log (reachabilityStatus);
+    if (reachabilityStatus !== undefined && reachabilityStatus !== '') {
+      ga('send','event','Third Party Ad', adAction + ' - ' + reachabilityStatus, adLabel, {'nonInteraction':1});
+    }
+    if (typeof window.startTime === 'number') {
+      adLoadTime = new Date().getTime();
+      adTimeSpent = adLoadTime - window.startTime;
+      ga('send', 'timing', 'Third Party Ad', adAction + ' VS Page Start', adTimeSpent, adLabel);
+    }
+    try {
+      console.log (adAction + ' - ' + reachabilityStatus + ' ' + adLabel + ': ' + adTimeSpent);
+    } catch (ignore) {
+    }
+  }
+}
+
+function checkAd(adOptions, adDomContainer) {
+  // to be on the safe side
+  // use setTimeout so that the third party script will be 
+  // captured in the innerHTML in all browsers
+  var img;
+  var passDomCheck = false;
+  var adDomImgs = 0;
+  var adDomObjects = 0;
+  var adDomIFrames = 0;
+  var adDomVideos = 0;
+  var adName = '';
+  var fallbackImgContainer = adDomContainer.getElementsByTagName('div')[0];
+  var thirdPartyVendor = '';
+  var reachabilityStatus = ''; // reachable, unreachable, unknown
+  var cookieSeconds = 60 * 30;
+  var expression;
+  var regex;
+
+  if (adOptions.checking === true) {
+    adName = adOptions.adClient + ' ' + adOptions.adWidth + 'x' + adOptions.adHeight + ' ' + adOptions.adNote;
+    if (adOptions.thirdPartyVendor !== undefined) {
+      thirdPartyVendor = adOptions.thirdPartyVendor;
+    } else if (/doubleclick|adsafeprotected\.com\/.*\/dc\//i.test(adOptions.fallBackImg)) {
+      thirdPartyVendor = 'dcR';
+    }
+    if (adOptions.checkingTime === 0) {
+      if (thirdPartyVendor !== '') {
+        // Check reachability status
+        reachabilityStatus = GetCookie (thirdPartyVendor) || 'unknown';
+        adOptions.reachabilityStatus = reachabilityStatus;
+        //adOptions.thirdPartyVendor = thirdPartyVendor;
+      }
+      trackAd('Impression Track Start', adName, reachabilityStatus);
+      //SetCookie(thirdPartyVendor, 'unknown', cookieSeconds, '/');
+    } else {
+      if (adOptions.reachabilityStatus !== undefined ) {
+        reachabilityStatus = adOptions.reachabilityStatus;
+      //console.log (reachabilityStatus);
+      }
+      if (adOptions.thirdPartyVendor !== undefined) {
+        thirdPartyVendor = adOptions.thirdPartyVendor;
+      }
+    }
+    //console.log (thirdPartyVendor);
+    //Dom Check
+    if (adDomContainer === null) {
+      passDomCheck = false;
+      //console.log ('no dom yet');
+    } else if (adOptions.checkDom === true) {
+      adDomImgs = adDomContainer.getElementsByTagName('img').length;
+      adDomObjects = adDomContainer.getElementsByTagName('object').length;
+      adDomIFrames = adDomContainer.getElementsByTagName('iframe').length;
+      adDomVideos = adDomContainer.getElementsByTagName('video').length;
+      if (adDomImgs > 0 || adDomIFrames > 0 || adDomObjects > 0 || adDomVideos > 0) {
+        passDomCheck = true;
+      } else {
+        passDomCheck = false;
+      }
+    } else {
+      passDomCheck = true;
+    }
+    if (passDomCheck === true) {
+      adOptions.checking = false;
+      trackAd('Impression Track Success', adName, reachabilityStatus);
+      SetCookie(thirdPartyVendor, 'reachable', cookieSeconds, '/');
+    } else if (adOptions.checkingTime < adOptions.checkingTimeMax) {
+      //else if we still have time to check
+      //check again in 1 second
+      adOptions.checkingTime += 1;
+      setTimeout(function(){
+        checkAd(adOptions, adDomContainer);
+      }, 1000);
+    } else {
+      //else if time runs out
+      //tell Google Analytics ad has failed to load
+      //load the fallback image
+      trackAd('Impression Track Fail Main', adName, reachabilityStatus);
+      SetCookie(thirdPartyVendor, 'unreachable', cookieSeconds, '/');
+      if (adOptions.fallBackImg !== undefined && adOptions.fallBackImg !== '') {
+      expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+      regex = new RegExp(expression);
+        if (adOptions.fallBackImg.match(regex)) {
+          img = new Image();
+          img.src = adOptions.fallBackImg; 
+          img.onload = function() {
+            //fallback image is loaded successfully
+            //tell Google Analytics that ad has loaded through the fallback
+            //adDomContainer.style.backgroundImage = 'url('+ img.src +')';
+            fallbackImgContainer.innerHTML = '<img src="' + img.src + '">';
+            trackAd('Impression Track Success', adName, reachabilityStatus);
+            trackAd('Impression Track Fallback Image', adName, reachabilityStatus);
+          };
+          img.onerror = function() {
+            //fallback image is not loaded successfully
+            //tell Google Analytics that fallback image has also failed
+            trackAd('Impression Track Fail Fallback', adName, reachabilityStatus);
+          };
+        } else {
+          trackAd('Impression Track Fail Fallback Invalid', adName, reachabilityStatus);
+          ga('send','event','FallBack Image Error', adName, adOptions.fallBackImg, {'nonInteraction':1});
+        }
+      }
+    }
+  }
+}
+</script>
+
+</head>
+<body style="background:white;">
+
+<div>
+<!-- Code Generated from CMS Start -->
+<script>
+try {
+  window.containerAdded = false;
+  window.currentTimeStamp = new Date().getTime();
+  window.randomId = Math.random() * 1000000;
+  window.adUniqueId = '';
+  randomId = parseInt(randomId, 10);
+  adUniqueId = 'AD' + currentTimeStamp + randomId;
+  window[adUniqueId] = {
+    adClient: "Accenture",
+    adNote: "Oliver Test 001",
+    //thirdPartyVendor: "dcR",
+    adWidth: "300",
+    adHeight: "600",
+    checkDom: true,
+    fallBackImg: "<SCRIPT language='JavaScript1.1' SRC=",
+    //fallBackImg: "http://fw.adsafeprotected.com/rfw/dc/45917/6721571/ddm/ad/N5324.139612.6251545501621/B9229605.125291013;sz=300x600;ord=[timestamp]?",
+    checking: true,
+    checkingTime: 0,
+    checkingTimeMax: 8
+  };
+  document.write('<div id="'+ adUniqueId +'"></div>');
+  window.containerAdded = true;
+  window.adDomContainer = document.getElementById(adUniqueId).parentNode;
+  window.adOptions = window[adUniqueId];  
+  if (typeof checkAd === 'function') {
+    checkAd(adOptions, adDomContainer);
+  } else if (typeof parent.checkAd === 'function') {
+    parent.checkAd(adOptions, adDomContainer);
+  }
+} catch (ignore) {
+
+}
+</script>
+<SCRIPT language='JavaScript1.1' SRC="http://ad.doubleclick.net/ddm/adj/N5324.139612.6251545501621/B9229605.1252916080;sz=300x600;ord=[timestamp]?">
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="http://ad.doubleclick.net/ddm/jump/N5324.139612.6251545501621/B9229605.125291608;sz=300x600;ord=[timestamp]?">
+<IMG SRC="http://ad.doubleclick.net/ddm/ad/N5324.139612.6251545501621/B9229605.125291608;sz=300x600;ord=[timestamp]?" BORDER=0 WIDTH=300 HEIGHT=600 ALT="Advertisement"></A>
+</NOSCRIPT>
+<!-- Code Generated from CMS End -->
+</div>
+
+<br><br>
+
+<!--
+<iframe src="codeinframe.html" marginheight="0" marginwidth="0" frameborder="0" width="300" height="250" scrolling="no" ></iframe>
+-->
+
+</body>
+</html>

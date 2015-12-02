@@ -1,0 +1,579 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Language" content="zh-CN"/>
+<title>特殊广告代码生成</title>
+<style>
+	html, body {
+		font-family: arial;
+		font-size: 18px;
+		background-color: #777;
+		height: 100%;
+	}
+	div {
+		line-height: 161.8%;
+	}
+	h1 {
+		font-size: 22px;
+	}
+	.o-full-body {
+		margin: 0 auto;
+		max-width: 1024px;
+		background-color: #FFF1E0;
+		min-height: 100%;
+		padding: 14px;
+	}
+	.o-input-text, .o-textarea, .o-select {
+		width: 100%;
+		box-sizing: border-box;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		margin: 0;
+		height: 36px;
+		border: 1px solid #cec6b9;
+		border-radius: 5px;
+		padding: 7px 5px 8px;
+		width: 100%;
+		background-color: #fff;
+		color: #333;
+		font-family: BentonSans,sans-serif;
+		font-size: 16px;
+		outline: 0;
+		-webkit-transition: .15s box-shadow ease-in;
+		transition: .15s box-shadow ease-in;
+		background-clip: padding-box;
+	}
+	.o-code-switch a{
+		color: #2e6e9e;
+		cursor: pointer;
+	}
+	.o-code-switch a.on {
+		color: #000;
+		font-weight: bold;
+	}
+	.warning {
+		border: 1px solid #CC0000;
+	}
+	.highlight {
+		color: #9E2F50;
+	}
+	.o-textarea {
+		height: 100px;
+	}
+	.o-forms-select {
+		cursor: pointer;
+		background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zd…kgMS4xNjktLjMyNiAxLjc0OGwyLjUzNiAzLjU1NnoiIGZpbGw9IiM1MDUwNTAiLz48L3N2Zz4=);
+		background-position: right center;
+		background-position: right 5px center;
+		background-repeat: no-repeat;
+		background-origin: border-box;
+		background-size: 19px;
+		padding-right: 24px;
+		padding-top: 6px;
+		line-height: 110%;
+		padding-bottom: 6px\9;
+		padding-right: 5px\9;
+		background-image: none\9;
+		text-indent: .01px;
+		text-overflow: '';
+		width: 100%;
+		font-size: 18px;
+	}
+	.o-buttons {
+		display: inline-block;
+		box-sizing: border-box;
+		vertical-align: middle;
+		margin: 0;
+		outline: 0;
+		border-style: solid;
+		border-radius: 5px;
+		text-align: center;
+		text-decoration: none;
+		font-family: BentonSans,sans-serif;
+		cursor: pointer;
+		-webkit-transition: .3s background-color,.15s box-shadow ease-in;
+		transition: .3s background-color,.15s box-shadow ease-in;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		background-clip: padding-box;
+		padding: 3px 14px 3px 14px;
+		font-size: 14px;
+		line-height: 16px;
+		border-width: 1px;
+		color: #2e6e9e;
+		background: 0 0;
+		border-color: #2e6e9e;
+		color: #fff;
+		background: #2e6e9e;
+		border-color: #2e6e9e;
+		padding: 8px 18px 8px 18px;
+		font-size: 16px;
+		line-height: 18px;
+		border-width: 1px;
+	}
+	.o-buttons-container {
+		text-align: center;
+	}
+	.o-group {
+		margin-bottom: 14px;
+	}
+	.o-hidden {
+		display: none;
+	}
+</style>
+<script>
+	var cutsTheMustard = 'getComputedStyle' in window && !(window.navigator.userAgent.indexOf('IEMobile') > -1 && !CustomEvent);
+	if (cutsTheMustard) {
+		(function(){
+			var el = document.documentElement;
+			el.className = el.className.replace('no-js', '');
+			el.className += ' js';
+		}())
+	} else {
+		alert ('I only tested this on Chrome. Please change to Chrome if there is any problem. ');
+	}
+</script>
+</head>
+<body>
+	<div class="o-full-body">
+		<h1>Ad Code Generator</h1>
+		<div class="o-code-switch">
+			<a onclick="javascript:switchCodeTo(this);initForTemplate('o-code-0');" id="o-code-switch-0">Third Party Ad</a>
+			 | 
+			<a onclick="javascript:switchCodeTo(this);initForTemplate('o-code-1');" id="o-code-switch-1">PC Full Page</a>
+			 | 
+			<a onclick="javascript:switchCodeTo(this);initForTemplate('o-code-2');" id="o-code-switch-2">iPad Full Page</a>
+			 | 
+			<a onclick="javascript:switchCodeTo(this);initForTemplate('o-code-3');" id="o-code-switch-3">Phone Full Page</a>
+			| 
+			<a onclick="javascript:switchCodeTo(this);initForTemplate('o-code-4');" id="o-code-switch-4">House Ad 250</a>
+			| 
+			<a onclick="javascript:switchCodeTo(this);initForTemplate('o-code-5');" id="o-code-switch-5">House Ad 600</a>
+			| 
+			<a onclick="javascript:switchCodeTo(this);initForTemplate('o-code-6');" id="o-code-switch-6">House Ad IFrame</a>
+		</div>
+
+		<div id="input-values"></div>
+		<div class="o-buttons-container o-group"><button id="o-create-code" onclick="createCode()" class="o-buttons">Go For It! </button></div>
+
+		<div id="code-copy-container" class="o-group o-hidden">
+			<div>Copy the Following Code</div>
+			<form id="code-form" method="post" target="CodePreview" action="preview.php">
+			<textarea id="code-to-copy" class="o-textarea" placeholder="Paste Third Party Code Here" name="adcode"></textarea>
+			</form>
+		</div>
+
+		<div id="code-preview-container" class="o-group o-hidden">
+			<div>Preview The Code</div>
+			<div id="code-preview-inner"></div>
+		</div>
+
+		<textarea class="o-hidden" id="o-code"></textarea>
+		
+
+<textarea class="o-hidden" id="o-code-1">
+<style>
+.hideQR .app-download-container {
+	display:none;
+}
+</style>
+<script language="javascript">
+var link='[{"name":"link","title":"Link","default":"","placeholder":"the url here","dataType":"text"}]';
+var thefile='[{"name":"file","title":"Creative Url","default":"","placeholder":"The Url for the File","dataType":"text"}]';
+var third_impression='[{"name":"thirdparty","title":"Third Party Impression","default":"","placeholder":"Third Party Tracking","optional": true,"dataType":"text"}]';
+var theurl="[ASCLICK]&u="+link+"";
+var thewidth='[{"name":"width","title":"Width","default":"700","placeholder":"","dataType":"number"}]px';
+var theheight="[{"name":"height","title":"Height","default":"520","placeholder":"","dataType":"number"}]px";
+var cookiesecond=[{"name":"cookiehours","title":"Cookie Duration (Hours)","default":"24","placeholder":"","dataType":"number"}]*60*60;
+var rb2=GetCookie ("rb2");
+function closeFullPageAd(){
+	document.getElementById("roadblock").style.display="none";
+	document.body.className = document.body.className.replace(/ hideQR/g, '');;
+}
+if (rb2 == null) {
+
+if (thefile.toLowerCase().indexOf(".swf")>0) {
+document.write ('<div style="margin-bottom:1000px;" id=rbimg><div style="font-weight:bold;color:#666;text-align:center;cursor:pointer" onclick=\'javascript:closeFullPageAd();\'>跳过广告</div><object width="' + thewidth + '" height="' + theheight + '"><param name="movie" value="'+ thefile +'"><embed src="' + thefile + '?clickTag=' + theurl + '" width="' + thewidth + '" height="' + theheight + '"></embed></object><img src="'+ third_impression +'" border=0 width=0 height=0></a></div>');
+} else {
+document.write ('<div style="margin-bottom:1000px;" id=rbimg><div style="font-weight:bold;color:#666;text-align:center;cursor:pointer" onclick=\'javascript:closeFullPageAd();\'>跳过广告</div><a href="' + theurl + '" target=_blank><img src="'+ thefile +'" border=0 width="' + thewidth + '" height="' + theheight + '"></a><img src="'+ third_impression +'" border=0 width=0 height=0></a></div>');
+}
+
+var h=window.screen.availHeight;
+var topm=(h-520-300)/2;
+if (topm>0) {
+document.getElementById("rbimg").style.marginTop = topm + "px";
+} else {
+document.getElementById("rbimg").style.marginTop = 0;
+}
+document.body.className = document.body.className + ' hideQR';
+setTimeout(function(){
+	closeFullPageAd()
+},8000);
+SetCookie("rb2",1,cookiesecond,"/");
+}
+</script>
+</textarea>
+
+<textarea class="o-hidden" id="o-code-2">
+<script>
+(function() {
+var adOpacity = '[{"name":"adopacity","title":"Opacity (0-1)","default":"1","placeholder":"","dataType":"number"}]';
+var adLink = '[{"name":"link","title":"Link","default":"","placeholder":"the url here","dataType":"text"}]';
+var adImage = '[{"name":"image1","title":"Landscape Image","default":"","placeholder":"landscape image url here","dataType":"text"}]';
+var adImage2 = '[{"name":"image2","title":"Portrait Image","default":"","placeholder":"landscape image url here","dataType":"text"}]';
+var adWidth = '[{"name":"width1","title":"Landscape Width","default":"1024","placeholder":"","dataType":"number"}]';
+var adHeight = '[{"name":"height1","title":"Landscape Height","default":"750","placeholder":"","dataType":"number"}]';
+var adWidth2 = '[{"name":"width2","title":"Portrait Width","default":"768","placeholder":"","dataType":"number"}]';
+var adHeight2 = '[{"name":"height2","title":"Portrait Height","default":"1006","placeholder":"","dataType":"number"}]';
+var closeButtonPosition = '';
+var adClass1 = (adWidth<700) ? 'mobile-landscape' : 'wide-screen';
+var adClass2 = (adWidth<700) ? 'mobile-portrait' : 'narrow-screen';
+var adCode = '';
+if (adLink.indexOf('?')>0 && !adLink.indexOf('?http')) {
+adLink = '&isad=1';
+} else {
+adLink += '?isad=1';
+}
+adCode = '<div class=overlayBG style="opacity:'+adOpacity'"></div><div class=inner><div class=cell><div class="' + adClass1 + '" style="width:'+adWidth+'px;height:'+adHeight+'px;margin:auto;position:relative;"><div class="o-overlay__close" style="top:0;right:0;"><div class="o-overlay__close-icon" onclick="closeOverlay()"></div></div><a href="'+adLink+'" target=_blank><div style="width:'+adWidth+'px;height:'+adHeight+'px;background-image: url(' + adImage + ');background-repeat: no-repeat;"></div></a></div><div class="' + adClass2 + '" style="width:'+adWidth2+'px;height:'+adHeight2+'px;margin:auto;position:relative;"><div class="o-overlay__close" style="top:0;right:0;"><div class="o-overlay__close-icon" onclick="closeOverlay()"></div></div><a href="'+adLink+'" target=_blank><div style="width:'+adWidth2+'px;height:'+adHeight2+'px;background-image: url(' + adImage2 + ');background-repeat: no-repeat;"></div></a></div></div>';
+var popAd = parent.parent.document.getElementById("pop-ad");
+var popAdClass = popAd.className;
+var img = new Image();
+img.src = adImage;
+if (popAdClass.indexOf('done')<0) {
+img.onload = function() { 
+var img2 = new Image();
+img2.src = adImage2;
+img2.onload = function(){
+popAd.innerHTML=adCode;
+popAd.className = 'overlay on done';
+setTimeout(function(){
+popAd.className = 'overlay done';
+popAd.innerHTML = '';
+},5000);
+};
+};
+}
+}());
+
+var track = new Image();
+track.src = '[{"name":"tracking","title":"Third Party Tracking","default":"","placeholder":"image url here","dataType":"text","optional": true}]';
+</script>
+</textarea>
+
+
+
+<textarea class="o-hidden" id="o-code-3">
+<script>
+(function() {
+var adOpacity = '[{"name":"adopacity","title":"Opacity (0-1)","default":"1","placeholder":"","dataType":"number"}]';
+var adLink = '[{"name":"link","title":"Link","default":"","placeholder":"the url here","dataType":"text"}]';
+var adImage = '[{"name":"image1","title":"Landscape Image","default":"","placeholder":"landscape image url here","dataType":"text"}]';
+var adImage2 = '[{"name":"image2","title":"Portrait Image","default":"","placeholder":"landscape image url here","dataType":"text"}]';
+var adWidth = '[{"name":"width1","title":"Landscape Width","default":"450","placeholder":"","dataType":"number"}]';
+var adHeight = '[{"name":"height1","title":"Landscape Height","default":"300","placeholder":"","dataType":"number"}]';
+var adWidth2 = '[{"name":"width2","title":"Portrait Width","default":"300","placeholder":"","dataType":"number"}]';
+var adHeight2 = '[{"name":"height2","title":"Portrait Height","default":"450","placeholder":"","dataType":"number"}]';
+var closeButtonPosition = '';
+var adClass1 = (adWidth<700) ? 'mobile-landscape' : 'wide-screen';
+var adClass2 = (adWidth<700) ? 'mobile-portrait' : 'narrow-screen';
+var adCode = '';
+if (adLink.indexOf('?')>0 && !adLink.indexOf('?http')) {
+adLink = '&isad=1';
+} else {
+adLink += '?isad=1';
+}
+adCode = '<div class=overlayBG style="opacity:'+adOpacity'"></div><div class=inner><div class=cell><div class="' + adClass1 + '" style="width:'+adWidth+'px;height:'+adHeight+'px;margin:auto;position:relative;"><div class="o-overlay__close" style="top:0;right:0;"><div class="o-overlay__close-icon" onclick="closeOverlay()"></div></div><a href="'+adLink+'" target=_blank><div style="width:'+adWidth+'px;height:'+adHeight+'px;background-image: url(' + adImage + ');background-repeat: no-repeat;background-size:cover;"></div></a></div><div class="' + adClass2 + '" style="width:'+adWidth2+'px;height:'+adHeight2+'px;margin:auto;position:relative;"><div class="o-overlay__close" style="top:0;right:0;"><div class="o-overlay__close-icon" onclick="closeOverlay()"></div></div><a href="'+adLink+'" target=_blank><div style="width:'+adWidth2+'px;height:'+adHeight2+'px;background-image: url(' + adImage2 + ');background-repeat: no-repeat;background-size:cover;"></div></a></div></div>';
+var popAd = parent.parent.document.getElementById("pop-ad");
+var popAdClass = popAd.className;
+var img = new Image();
+img.src = adImage;
+if (popAdClass.indexOf('done')<0) {
+img.onload = function() { 
+var img2 = new Image();
+img2.src = adImage2;
+img2.onload = function(){
+popAd.innerHTML=adCode;
+popAd.className = 'overlay on done';
+setTimeout(function(){
+popAd.className = 'overlay done';
+popAd.innerHTML = '';
+},5000);
+};
+};
+}
+}());
+
+var track = new Image();
+track.src = '[{"name":"tracking","title":"Third Party Tracking","default":"","placeholder":"image url here","dataType":"text","optional": true}]';
+</script>
+</textarea>
+
+
+
+<textarea class="o-hidden" id="o-code-4">
+<style>
+#ad-table a, #ad-table a:link, #ad-table a:visited, #ad-table a:active, #ad-table a:hover {
+	text-decoration: none;
+}
+</style>
+<table id="ad-table" width="300" height="250" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#11619E">
+  <tr>
+    <td align="center" valign="top"><table width="300" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><br></td>
+      </tr>
+      <tr>
+        <td align="center"><a href="[{"name":"logolink","title":"Top Logo Link","default":"http://www.ftchinese.com/m/marketing/intelligence.html","placeholder":"","dataType":"text"}]" target="_blank"><img src="[{"name":"logoUrl","title":"Top Logo Image","default":"http://i.ftimg.net/images/2015/11/0824f9582776f8143bc004fd76776442.jpg","placeholder":"","dataType":"text"}]" width="241" height="58" border="0"></a></td>
+      </tr>
+      <tr>
+        <td><br></td>
+      </tr>
+      <tr>
+        <td height="75" bgcolor="#377AAE"><table width="250" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#377AAE">
+          <tr>
+            <td width="70"><a href="[{"name":"iconlink1","title":"Icon 1 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><img src="[{"name":"iconimage1","title":"Icon 1 Image","default":"http://","placeholder":"","dataType":"text"}]" width="61" height="61" border="0" /></a></td>
+            <td align="left"><label><span class="css"><font size="1" face="" color="#ffffff" style="font-size: 16px; color: #ffffff; line-height:25px"><a href="#" target="_blank"></a></font></span><a href="[{"name":"itemlink1","title":"Item 1 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><font size="1" face="" color="#ffffff" style="font-size: 16px; color: #ffffff; line-height:25px">[{"name":"item1","title":"Item 1 Headline (2 lines)","default":"<br>","placeholder":"","dataType":"text"}]</font></a></label></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td height="75"><table width="250" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="70"><a href="[{"name":"iconlink2","title":"Icon 2 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><img src="[{"name":"iconimage2","title":"Icon 2 Image","default":"http://","placeholder":"","dataType":"text"}]" width="61" height="61" border="0" /></a></td>
+            <td align="left"><span class="css2"><font size="1" face="ºÚÌå" color="#ffffff" style="font-size: 16px; color: #ffffff; line-height:25px"><a href="#" target="_blank"></a></font></span><a href="[{"name":"itemlink2","title":"Item 2 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><font size="1" face="ºÚÌå" color="#ffffff" style="font-size: 16px; color: #ffffff; line-height:25px">[{"name":"item2","title":"Item 2 Headline (2 lines)","default":"<br>","placeholder":"","dataType":"text"}]</font></a></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</textarea>
+
+
+
+<textarea class="o-hidden" id="o-code-5">
+<style>
+#ad-table a, #ad-table a:link, #ad-table a:visited, #ad-table a:active, #ad-table a:hover {
+	text-decoration: none;
+}
+</style>
+<table id="ad-table" width="300" height="600" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#11619E">
+  <tr>
+    <td align="center" valign="top"><table width="300" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><br></td>
+      </tr>
+      <tr>
+        <td align="center"><a href="[{"name":"logolink","title":"Top Logo Link","default":"http://www.ftchinese.com/m/marketing/intelligence.html","placeholder":"","dataType":"text"}]" target="_blank"><img src="[{"name":"logoUrl","title":"Top Logo Image","default":"http://i.ftimg.net/images/2015/11/0824f9582776f8143bc004fd76776442.jpg","placeholder":"","dataType":"text"}]" width="241" height="58" border="0" /></a></td>
+      </tr>
+      <tr>
+        <td><br></td>
+      </tr>
+      <tr>
+        <td><table width="240" border="0" align="center" cellpadding="0" cellspacing="0">
+          
+          <tr>
+            <td align="center"><a href="[{"name":"sloganlink","title":"Slogan Link","default":"http://www.ftchinese.com/m/marketing/intelligence.html","placeholder":"","dataType":"text"}]" target="_blank"><font size="1" face="ºÚÌå" color="#ffffff" style="font-size: 18px; color: #ffffff; line-height:30px">[{"name":"slogan","title":"slogan","default":"基于近240万中国商业决策者 的调研结果","placeholder":"","dataType":"text"}]</font></a></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td height="30"></td>
+      </tr>
+      <tr>
+        <td height="90" bgcolor="#377AAE"><table width="250" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#377AAE">
+          <tr>
+            <td width="70"><a href="[{"name":"iconlink1","title":"Icon 1 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><img src="[{"name":"iconimage1","title":"Icon 1 Image","default":"http://","placeholder":"","dataType":"text"}]" width="61" height="61" border="0" /></a></td>
+            <td align="left"><label><a href="[{"name":"itemlink1","title":"Item 1 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><font size="1" color="#ffffff" style="font-size: 16px; color: #ffffff; line-height:25px">[{"name":"item1","title":"Item 1 Headline (2 lines)","default":"<br>","placeholder":"","dataType":"text"}]</font></a></label></td>
+          </tr>
+          
+        </table></td>
+      </tr>
+      <tr>
+        <td height="90"><table width="250" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="70"><a href="[{"name":"iconlink2","title":"Icon 2 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><img src="[{"name":"iconimage2","title":"Icon 2 Image","default":"http://","placeholder":"","dataType":"text"}]" width="61" height="61" border="0" /></a></td>
+            <td align="left"><a href="[{"name":"itemlink2","title":"Item 2 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><font size="1" color="#ffffff" style="font-size: 16px; color: #ffffff; line-height:25px">[{"name":"item2","title":"Item 2 Headline (2 lines)","default":"<br>","placeholder":"","dataType":"text"}]</font></a></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td height="90" bgcolor="#377AAE"><table width="250" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#377AAE">
+          <tr>
+            <td width="70"><a href="[{"name":"iconlink3","title":"Icon 3 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><img src="[{"name":"iconimage3","title":"Icon 3 Image","default":"http://","placeholder":"","dataType":"text"}]" width="61" height="61" border="0" /></a></td>
+            <td align="left"><a href="[{"name":"itemlink3","title":"Item 3 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><font size="1" color="#ffffff" style="font-size: 16px; color: #ffffff; line-height:25px">[{"name":"item3","title":"Item 3 Headline (2 lines)","default":"<br>","placeholder":"","dataType":"text"}]</font></a></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td height="90"><table width="250" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="70"><a href="[{"name":"iconlink4","title":"Icon 4 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><img src="[{"name":"iconimage4","title":"Icon 4 Image","default":"http://","placeholder":"","dataType":"text"}]" width="61" height="61" border="0" /></a></td>
+            <td align="left"><a href="[{"name":"itemlink4","title":"Item 4 Link","default":"http://","placeholder":"","dataType":"text"}]" target="_blank"><font size="1" color="#ffffff" style="font-size: 16px; color: #ffffff; line-height:25px">[{"name":"item4","title":"Item 4 Headline (2 lines)","default":"<br>","placeholder":"","dataType":"text"}]</font></a></td>
+          </tr>
+        </table></td>
+      </tr>
+      
+    </table></td>
+  </tr>
+</table>
+</textarea>
+
+
+<textarea class="o-hidden" id="o-code-6">
+<iframe src="[{"name":"iframeurl","title":"iFrame Url","default":"http://www.ftchinese.com/interactive/","placeholder":"","dataType":"text"}]" width="[{"name":"iframewidth","title":"iFrame Width","default":300,"placeholder":"","dataType":"number"}]" height="[{"name":"iframeheight","title":"iFrame Height","default":250,"placeholder":"","dataType":"number"}]" frameborder="0" scrolling="no" marginwidth="0" marginheight="0"></iframe>
+</textarea>
+
+
+<textarea class="o-hidden" id="o-code-0">
+<script>
+try {
+  window.containerAdded = false;
+  window.currentTimeStamp = new Date().getTime();
+  window.randomId = Math.random() * 1000000;
+  window.adUniqueId = '';
+  randomId = parseInt(randomId, 10);
+  adUniqueId = 'AD' + currentTimeStamp + randomId;
+  window[adUniqueId] = {
+    adClient: "[{"name":"adclient","title":"Client Name","default":"","placeholder":"客户名","dataType":"text"}]",
+    adNote: "[{"name":"adnote","title":"Ad Note","default":"","placeholder":"订单号和其他有助于识别识别这次投放的信息","dataType":"text"}]",
+    thirdPartyVendor: "[{"name":"ThirdPartyVendor","title":"Third Party Vendor","default":"","placeholder":"第三方名称","dataType":"text","inputType":"select","dataSource":"adVendors"}]",
+    adWidth: "[{"name":"adwidth","title":"Width","default":"728","placeholder":"","dataType":"number"}]",
+    adHeight: "[{"name":"adwidth","title":"Height","default":"90","placeholder":"","dataType":"number"}]",
+    checkDom: true,
+    fallBackImg: "[{"name":"fallbackImg","title":"Fallback Image","default":"","placeholder":"通常是DC的noscript代码中的图片地址，请正确复制","dataType":"url"}]",
+    checking: true,
+    checkingTime: 0,
+    checkingTimeMax: 8
+  };
+  document.write('<div id="'+ adUniqueId +'"></div>');
+  window.containerAdded = true;
+  window.adDomContainer = document.getElementById(adUniqueId).parentNode;
+  window.adOptions = window[adUniqueId];  
+  if (typeof checkAd === 'function') {
+    checkAd(adOptions, adDomContainer);
+  } else if (typeof parent.checkAd === 'function') {
+    parent.checkAd(adOptions, adDomContainer);
+  }
+} catch (ignore) {
+
+}
+</script>
+[{"name":"ThirdPartyCode","title":"Third Party Code","default":"","placeholder":"第三方提供的纯JavaScript代码","dataType":"text","inputType":"textarea"}]
+</textarea>
+
+
+	</div>
+</body>
+<script>
+var adVendors = {
+	"dcR": "DoubleClick",
+	"eyB": "EyeBlaster",
+	"meM": "MediaMind"
+};
+function createCode() {
+	var finalCode = document.getElementById('o-code').value;
+	//var inputs = document.getElementsByTagName('input');
+	var inputs = document.getElementById('input-values').querySelectorAll('input, textarea, select');
+	var inputLength = inputs.length;
+	var currentInput;
+	var currentValue;
+	var isOptional;
+	var isWarned = false;
+	var protocolWarning = '';
+	for (var i=0; i<inputLength; i++) {
+		console.log (inputs[i].value);
+		currentInput = inputs[i];
+		if (currentInput.hasAttribute('data-replace') === true) {
+			currentKey = currentInput.getAttribute('data-replace');
+			currentValue = currentInput.value;
+			isOptional = currentInput.getAttribute('data-optional') || 'no';
+			currentInput.classList.remove('warning');
+			if (currentValue === '' && isOptional === 'no') {
+				alert (currentKey +' NOT filled! ');
+				currentInput.classList.add('warning');
+				document.getElementById('code-copy-container').className = 'o-hidden';
+				isWarned = true;
+			} else {
+				finalCode = finalCode.replace('[' + currentKey + ']', currentValue);
+			}
+		}
+	}
+	if (isWarned === true) {
+		return;
+	}
+	document.getElementById('code-to-copy').value = finalCode;
+	document.getElementById('code-copy-container').className = 'o-group';
+	document.getElementById('code-to-copy').select();
+	// post the code to an iframe
+	//document.getElementById('code-preview-inner').innerHTML = finalCode;
+	if (window.location.protocol === 'https:') {
+		protocolWarning = '<div class="highlight">由于使用了HTTPS的网址，预览功能可能无法正常运行，但是生成的代码是正确的。</div>';
+	}
+	document.getElementById('code-preview-inner').innerHTML = protocolWarning + '<iframe marginheight="0" marginwidth="0" frameborder="0" width="100%" height="600" scrolling="no" name="CodePreview" id="CodePreview"></iframe>';
+	document.getElementById('code-preview-container').className = 'o-group';
+	//console.log (document.getElementById('code-form'));
+	document.getElementById('code-form').submit();
+}
+
+
+function initForTemplate(id) {
+	var codeText = document.getElementById(id).value;
+	var replaceText = [];
+	var formHTML = '';
+	var replaceText;
+	var currentValue;
+	var currentCode;
+	var optionalTag = '';
+	var optionsHTML = '';
+	var optionsData = {};
+	replaceText = codeText.match(/\[\{[^\]]*\}\]/g);
+	if (replaceText !== null) {
+		replaceTextCount = replaceText.length;
+		for (var i=0; i<replaceTextCount; i++) {
+			currentValue = replaceText[i];
+			currentValue = currentValue.replace(/[\[\]]/g,'');
+			currentCode = currentValue;
+			currentValue = JSON.parse(currentValue);
+			if (currentValue.optional === true) {
+				optionalTag = ' data-optional="yes"';
+			}
+			if (currentValue.inputType === 'textarea') {
+				formHTML += '<div class="o-group"><div>' + currentValue.title + '</div><textarea data-replace="' + currentValue.name + '" type="' + currentValue.dataType + '" class="o-textarea" placeholder="' + currentValue.placeholder + '"' + optionalTag + '>' + currentValue.default + '</textarea></div>';	
+			} else if (currentValue.inputType === 'select' && currentValue.dataSource !== undefined && typeof window[currentValue.dataSource] === 'object') {
+				optionsHTML = '<option value="">Please Select</option>';
+				optionsData = window[currentValue.dataSource];
+			    for (var k in optionsData) {
+			        if (optionsData.hasOwnProperty(k)) {
+			           optionsHTML += '<option value="' + k + '">' + optionsData[k] + '</option>';
+			        }
+			    }
+				formHTML += '<div class="o-group"><div>' + currentValue.title + '</div><select data-replace="' + currentValue.name + '" class="o-select">' + optionsHTML + '</select></div>';
+			} else {
+				formHTML += '<div class="o-group"><div>' + currentValue.title + '</div><input data-replace="' + currentValue.name + '" type="' + currentValue.dataType + '" value="' + currentValue.default + '" class="o-input-text" placeholder="' + currentValue.placeholder + '"' + optionalTag + '></div>';
+			}
+			codeText = codeText.replace(currentCode,currentValue.name);
+		}
+	}
+	document.getElementById('input-values').innerHTML = formHTML;
+	document.getElementById('o-code').value = codeText;
+	document.getElementById('code-preview-inner').innerHTML = '';
+	document.getElementById('code-preview-container').className = 'o-hidden o-group';
+}
+function switchCodeTo(ele) {
+	var sibs = ele.parentNode.getElementsByTagName('a');
+	var sibsCount = sibs.length;
+	for (var i=0; i<sibsCount; i++) {
+		sibs[i].classList.remove('on');
+	}
+	ele.classList.add('on');
+}
+switchCodeTo(document.getElementById('o-code-switch-0'));
+initForTemplate('o-code-0');
+</script>
+</html>
