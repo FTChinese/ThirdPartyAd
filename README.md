@@ -44,4 +44,5 @@ The DoubleClick problem is basically a problem with their server accessibility. 
 
 As you can see, if we target DoubleClick ads to the Reachable category, we can raise the success rate to over 90%. Similarly, we should avoid delivering DoubleClick tag to a user if last attempt fails, because the success rate would only be 19%. 
 
+### Beacon Needed
 We need to mark as many as possible users to either Reachable or Unreachable, otherwise the overall success rate will not be able to be improved markedly. One way to do it is to send an ajax request to DoubleClick for all Unknown category users before loading any ad, assuming DoubleClick accessibilities are consistent across different clients and campaigns. To do this, we need to get a DoubleClick script tag, which doesn't affect any other client. Ideally, this should be a house ad or just a 1x1 image dot. 
